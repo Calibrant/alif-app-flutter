@@ -1,10 +1,55 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app_alif/models/model.dart';
 
 class TodosProvider extends ChangeNotifier {
-  List<Model> _todoList=[];
+  // ignore: avoid_init_to_null
+  List<Model> _todoList = null;
 
-  List<Model> get todoList =>
+  // ignore: unnecessary_getters_setters
+  List<Model> get todoList => _todoList;
+
+  // ignore: unnecessary_getters_setters
+  set todoList(List<Model> list) {
+    _todoList = list;
+   // notifyListeners();
+  }
+
+  int _count = 0;
+
+  int get count => _count;
+
+  set count(counter) {
+    _count = counter;
+  }
+
+  Model _model;
+
+  Model get model => _model;
+
+  set model(mod){
+    _model=mod;
+    notifyListeners();
+  }
+
+ /*  String _status;
+  String get status => _status;
+  set status(statused){
+    _status = statused;
+   // notifyListeners();
+  } */
+
+  buildBody(BuildContext context, int index, Model model) {
+    model = todoList[index];
+    return model;
+  }
+
+  /*  int get todoListCount => _todoList.length;
+  set todoListCount(int count) {
+    _todoList.length = count;
+  }
+
+  List<Model> get todoListW =>
       _todoList.where((todo) => todo.isDone == false).toList();
 
   List<Model> get todosCompleted =>
@@ -14,5 +59,5 @@ class TodosProvider extends ChangeNotifier {
     model.isDone = !model.isDone;
     notifyListeners();
     return model.isDone;
-  }
+  } */
 }

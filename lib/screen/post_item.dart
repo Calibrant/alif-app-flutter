@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_alif/models/model.dart';
+
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
 
 class PostItem extends StatefulWidget {
   Model model;
   String appBarTitle;
-
   PostItem(this.model, this.appBarTitle);
   @override
   _PostItemState createState() => _PostItemState(this.model, this.appBarTitle);
@@ -22,6 +22,7 @@ class _PostItemState extends State<PostItem> {
 
   TextEditingController _titleEditingController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
+
   _PostItemState(this.model, this.appBarTitle);
 
   DateTime _dateTime = DateTime.now();
@@ -37,7 +38,6 @@ class _PostItemState extends State<PostItem> {
   Widget build(BuildContext context) {
     _titleEditingController.text = model.title;
     _dateController.text = model.description;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -58,8 +58,6 @@ class _PostItemState extends State<PostItem> {
                     selectedStatus = item;
                   });
                 }),
-
-                
             SizedBox(
               height: 20,
             ),
@@ -86,8 +84,8 @@ class _PostItemState extends State<PostItem> {
                             context: context,
                             initialDate:
                                 _dateTime == null ? DateTime.now() : _dateTime,
-                            firstDate: DateTime(2020),
-                            lastDate: DateTime(2099))
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2050))
                         .then((date) {
                       setState(() {
                         model.title = _titleEditingController.text;
@@ -130,12 +128,10 @@ class _PostItemState extends State<PostItem> {
     model.status = selectedStatus;
     // model.date = DateFormat.yMMMd().format(DateTime.now());
     DataBaseHelper dataBaseHelper = DataBaseHelper();
-
     if (model.id == null)
       dataBaseHelper.insert(model);
     else
       dataBaseHelper.updateItem(model);
-
     Navigator.pop(context, true);
   }
 }

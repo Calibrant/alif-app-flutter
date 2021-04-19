@@ -4,9 +4,8 @@ class Model {
   String description;
   String status;
   String date;
-  bool isDone;
 
-  Model(this.title, this.description, this.status, this.date, this.isDone);
+  Model(this.title, this.description, this.status, this.date);
 
   Model.withID(
       this.id, this.title, this.description, this.status, this.date);
