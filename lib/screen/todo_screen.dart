@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
+import 'package:flutter_app_alif/widgets/const.dart';
 import 'post_item.dart';
 
 class ToDoScreen extends StatefulWidget {
@@ -12,19 +15,18 @@ class ToDoScreen extends StatefulWidget {
 class _ToDoScreenState extends State<ToDoScreen> {
   DataBaseHelper dataBaseHelper = DataBaseHelper();
   List<Model> _todoList = null;
-  int count=0;
+  int count = 0;
   int _selectedIndex = 0;
   GlobalKey<ScaffoldState> _globalKey = new GlobalKey();
 
-@override
+  @override
   void initState() {
     super.initState();
     int count = 0;
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     List<Widget> _widgetOptions = [
       populateListView(),
       populateListView2(),
@@ -39,17 +41,20 @@ class _ToDoScreenState extends State<ToDoScreen> {
       key: _globalKey,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Center(child: Text("Список задач")),
+        title: Center(child: Text(S.of(context).app_bar_title)),
         actions: [
           IconButton(
-            tooltip: 'Добавить новую задачу',
+            tooltip: S.of(context).tool_tip,
             padding: EdgeInsets.only(right: 50.0),
             icon: Icon(
               Icons.add,
               size: 40.0,
             ),
             onPressed: () {
-              navigateToDetail(Model("", "", "", ""), "Add New Item");
+              navigateToDetail(
+                  Model(S.of(context).space, S.of(context).space,
+                      S.of(context).space, S.of(context).space),
+                  S.of(context).button_add_new_item);
             },
           ),
         ],
@@ -74,11 +79,11 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
           return Card(
-            elevation: 1,
+            elevation: 5,
             color: Colors.white,
             child: GestureDetector(
               onTap: () {
-                navigateToDetail(model, "Update Item");
+                navigateToDetail(model, S.of(context).button_update_item);
               },
               child: ListTile(
                 leading: Icon(Icons.edit),
@@ -87,9 +92,9 @@ class _ToDoScreenState extends State<ToDoScreen> {
                 trailing: Wrap(
                   spacing: 20.0,
                   children: [
-                    model.status == "Pending"
+                    model.status == S.of(context).model_status_pending
                         ? Icon(
-                            Icons.warning,
+                            Icons.pending_actions,
                             color: Colors.blue,
                           )
                         : Icon(Icons.done_all),
@@ -112,24 +117,24 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemCount: count,
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
-          return Card(
-            elevation: 1,
-            color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                navigateToDetail(model, "Update Item");
-              },
-              child: model.status == "Pending"
-                  ? ListTile(
+          return model.status == S.of(context).model_status_pending
+              ? Card(
+                  elevation: 5,
+                  color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      navigateToDetail(model, S.of(context).button_update_item);
+                    },
+                    child: ListTile(
                       leading: Icon(Icons.edit),
                       title: Text(model.title),
                       subtitle: Text(model.description),
                       trailing: Wrap(
                         spacing: 20.0,
                         children: [
-                          model.status == "Pending"
+                          model.status == S.of(context).model_status_pending
                               ? Icon(
-                                  Icons.warning,
+                                  Icons.pending_actions,
                                   color: Colors.blue,
                                 )
                               : Icon(Icons.done_all),
@@ -141,10 +146,10 @@ class _ToDoScreenState extends State<ToDoScreen> {
                           ),
                         ],
                       ),
-                    )
-                  : SizedBox.shrink(),
-            ),
-          );
+                    ),
+                  ),
+                )
+              : SizedBox.shrink();
         });
   }
 
@@ -153,24 +158,24 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemCount: count,
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
-          return Card(
-            elevation: 1,
-            color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                navigateToDetail(model, "Update Item");
-              },
-              child: model.status == "Pending"
-                  ? SizedBox.shrink()
-                  : ListTile(
+          return model.status == S.of(context).model_status_pending
+              ? SizedBox.shrink()
+              : Card(
+                  elevation: 5,
+                  color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      navigateToDetail(model, S.of(context).button_update_item);
+                    },
+                    child: ListTile(
                       leading: Icon(Icons.edit),
                       title: Text(model.title),
                       subtitle: Text(model.description),
                       trailing: Wrap(
                         spacing: 20.0,
                         children: [
-                          model.status == "Pending"
-                              ? Icon(Icons.warning)
+                          model.status == S.of(context).model_status_pending
+                              ? Icon(Icons.pending_actions)
                               : Icon(Icons.done_all, color: Colors.green),
                           GestureDetector(
                             child: Icon(Icons.delete, color: Colors.red),
@@ -181,8 +186,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                         ],
                       ),
                     ),
-            ),
-          );
+                  ),
+                );
         });
   }
 
@@ -198,7 +203,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
     int result = await dataBaseHelper.delete(toDoModel);
     if (result != 0) {
       _globalKey.currentState
-          .showSnackBar(SnackBar(content: Text("Item deleted successfully.")));
+          .showSnackBar(SnackBar(content: Text(S.of(context).snack_bar_text)));
       updateListView();
     }
   }

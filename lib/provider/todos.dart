@@ -12,7 +12,7 @@ class TodosProvider extends ChangeNotifier {
   // ignore: unnecessary_getters_setters
   set todoList(List<Model> list) {
     _todoList = list;
-   // notifyListeners();
+    // notifyListeners();
   }
 
   int _count = 0;
@@ -25,21 +25,21 @@ class TodosProvider extends ChangeNotifier {
 
   Model _model;
 
-  Model get model => _model;
+  Model get modelProvider => _model;
 
-  set model(mod){
-    _model=mod;
+  set modelProvider(mod) {
+    _model = mod;
     notifyListeners();
   }
 
- /*  String _status;
+  /*  String _status;
   String get status => _status;
   set status(statused){
     _status = statused;
    // notifyListeners();
   } */
 
-  buildBody(BuildContext context, int index, Model model) {
+ Model buildBody(BuildContext context, int index, Model model) {
     model = todoList[index];
     return model;
   }

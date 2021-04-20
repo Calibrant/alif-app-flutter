@@ -7,12 +7,9 @@ class Model {
 
   Model(this.title, this.description, this.status, this.date);
 
-  Model.withID(
-      this.id, this.title, this.description, this.status, this.date);
-      
+  Model.withID(this.id, this.title, this.description, this.status);
 
   // model to map
-
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = new Map();
 

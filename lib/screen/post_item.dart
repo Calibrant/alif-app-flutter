@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
-
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:intl/intl.dart';
-
 
 class PostItem extends StatefulWidget {
   Model model;
@@ -17,8 +16,11 @@ class _PostItemState extends State<PostItem> {
   Model model;
   String appBarTitle;
 
-  var _statusesList = ["Pending", "Completed"];
-  var selectedStatus = "Pending";
+  var _statusesList = [
+    S.current.model_status_pending,
+    S.current.model_status_completed
+  ];
+  var selectedStatus = S.current.model_status_pending;
 
   TextEditingController _titleEditingController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
@@ -26,11 +28,13 @@ class _PostItemState extends State<PostItem> {
   _PostItemState(this.model, this.appBarTitle);
 
   DateTime _dateTime = DateTime.now();
-  var myFormat = DateFormat('d-MM-yyyy');
+  var myFormat = DateFormat(S.current.date_format);
 
   @override
   void initState() {
-    selectedStatus = model.status.length == 0 ? "Pending" : model.status;
+    selectedStatus = model.status.length == 0
+        ? S.current.model_status_pending
+        : model.status;
     super.initState();
   }
 
@@ -64,8 +68,8 @@ class _PostItemState extends State<PostItem> {
             TextField(
               controller: _titleEditingController,
               decoration: InputDecoration(
-                  hintText: 'Enter Title',
-                  labelText: 'Title',
+                  hintText: S.of(context).text_field_text,
+                  labelText: S.of(context).text_field_title,
                   border: OutlineInputBorder()),
             ),
             SizedBox(
@@ -75,10 +79,12 @@ class _PostItemState extends State<PostItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(_dateTime == null
-                    ? 'Ничего не выбрано'
-                    : _dateTime.toString()),
+                    ? S.of(context).date_nothing_selected
+                    : //DateFormat.yMMMMEEEEd().format(DateTime.now())),
+                    //  DateFormat.yMMMd().format(DateTime.now())),
+                    _dateTime.toString()),
                 ElevatedButton(
-                  child: Text('Pick a date'),
+                  child: Text(S.of(context).button_pick_date),
                   onPressed: () {
                     showDatePicker(
                             context: context,
@@ -126,7 +132,7 @@ class _PostItemState extends State<PostItem> {
     model.title = _titleEditingController.text;
     model.description = _dateController.text;
     model.status = selectedStatus;
-    // model.date = DateFormat.yMMMd().format(DateTime.now());
+    model.date = _dateTime.toString();
     DataBaseHelper dataBaseHelper = DataBaseHelper();
     if (model.id == null)
       dataBaseHelper.insert(model);

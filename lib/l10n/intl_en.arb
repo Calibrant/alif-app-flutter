@@ -1,0 +1,17 @@
+{
+    "app_bar_title": "Список задач",
+    "tool_tip": "Добавить новую задачу",
+    "button_add_new_item": "Add New Item",
+    "button_update_item":"Update Item",
+    "model_status_pending":"Pending",
+    "model_status_completed":"Completed",
+    "snack_bar_text":"Item deleted successfully",
+    "text_field_text":"Enter Title",
+    "text_field_title":"Title",
+    "button_pick_date":"Pick a date",
+    "date_format":"d-MM-yyyy",
+    "date_nothing_selected":"Ничего не выбрано",
+    "bottom_navbar_title0":"Todos",
+    "space":""
+
+}

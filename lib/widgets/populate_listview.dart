@@ -23,7 +23,7 @@ class PopulateListView extends StatelessWidget {
         itemCount: Provider.of<TodosProvider>(context).count,
         itemBuilder: (context, index) {
           Model model = Provider.of<TodosProvider>(context).buildBody(
-              context, index, Provider.of<TodosProvider>(context).model);
+              context, index, Provider.of<TodosProvider>(context).modelProvider);
           return Card(
             elevation: 1,
             color: Colors.white,
