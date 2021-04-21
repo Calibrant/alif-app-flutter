@@ -14,27 +14,27 @@ class BottomNavBar extends StatelessWidget {
       selectedLabelStyle: TextStyle(color: Colors.white, fontSize: 16.0),
       unselectedLabelStyle: TextStyle(color: Colors.white, fontSize: 16.0),
       elevation: 5,
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).primaryColor,
       type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
             Icons.fact_check_outlined,
-            color: Colors.black,
+            color: Colors.amber,
           ),
           label: "Todos",
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.pending,
-            color: Colors.black,
+            color: Colors.amber,
           ),
           label: 'Pending',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.check,
-            color: Colors.black,
+            color: Colors.amber,
           ),
           label: 'Complete',
         ),

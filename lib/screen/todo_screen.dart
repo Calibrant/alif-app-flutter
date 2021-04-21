@@ -4,8 +4,8 @@ import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
-import 'package:flutter_app_alif/widgets/const.dart';
 import 'post_item.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ToDoScreen extends StatefulWidget {
   @override
@@ -38,10 +38,11 @@ class _ToDoScreenState extends State<ToDoScreen> {
       updateListView();
     }
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: _globalKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Center(child: Text(S.of(context).app_bar_title)),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Center(child: Text(S.of(context).app_bar_title,style: Theme.of(context).primaryTextTheme.headline6,)),
         actions: [
           IconButton(
             tooltip: S.of(context).tool_tip,
@@ -49,6 +50,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
             icon: Icon(
               Icons.add,
               size: 40.0,
+              color: Theme.of(context).cardColor,
             ),
             onPressed: () {
               navigateToDetail(
@@ -78,33 +80,56 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemCount: count,
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
-          return Card(
-            elevation: 5,
-            color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                navigateToDetail(model, S.of(context).button_update_item);
-              },
-              child: ListTile(
-                leading: Icon(Icons.edit),
-                title: Text(model.title),
-                subtitle: Text(model.description),
-                trailing: Wrap(
-                  spacing: 20.0,
-                  children: [
-                    model.status == S.of(context).model_status_pending
-                        ? Icon(
-                            Icons.pending_actions,
-                            color: Colors.blue,
-                          )
-                        : Icon(Icons.done_all),
-                    GestureDetector(
-                      child: Icon(Icons.delete, color: Colors.red),
-                      onTap: () {
-                        deleteItem(model);
-                      },
-                    ),
-                  ],
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              actions: [
+                IconSlideAction(
+                  color: Theme.of(context).primaryColor,
+                  onTap: () {
+                    navigateToDetail(model, S.of(context).button_update_item);
+                  },
+                  caption: 'Edit',
+                  icon: Icons.edit,
+                ),
+              ],
+              secondaryActions: [
+                IconSlideAction(
+                  color: Colors.red,
+                  caption: 'Delete',
+                  onTap: () {
+                    deleteItem(model);
+                  },
+                  icon: Icons.delete,
+                ),
+              ],
+              child: Card(
+                elevation: 5,
+                color: Theme.of(context).cardColor,
+                child: ListTile(
+                  //leading: Icon(Icons.edit),
+                  title: Text(
+                    model.title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(model.description),
+                  trailing: Wrap(
+                    spacing: 20.0,
+                    children: [
+                      model.status == S.of(context).model_status_pending
+                          ? Icon(
+                              Icons.pending_actions,
+                              color: Theme.of(context).iconTheme.color, //blue
+                            )
+                          : Icon(
+                              Icons.done_all,
+                              color: Theme.of(context)
+                                  .accentIconTheme
+                                  .color, //green
+                            ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -117,39 +142,64 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemCount: count,
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
-          return model.status == S.of(context).model_status_pending
-              ? Card(
-                  elevation: 5,
-                  color: Colors.white,
-                  child: GestureDetector(
-                    onTap: () {
-                      navigateToDetail(model, S.of(context).button_update_item);
-                    },
-                    child: ListTile(
-                      leading: Icon(Icons.edit),
-                      title: Text(model.title),
-                      subtitle: Text(model.description),
-                      trailing: Wrap(
-                        spacing: 20.0,
-                        children: [
-                          model.status == S.of(context).model_status_pending
-                              ? Icon(
-                                  Icons.pending_actions,
-                                  color: Colors.blue,
-                                )
-                              : Icon(Icons.done_all),
-                          GestureDetector(
-                            child: Icon(Icons.delete, color: Colors.red),
-                            onTap: () {
-                              deleteItem(model);
-                            },
-                          ),
-                        ],
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              actions: [
+                IconSlideAction(
+                  color: Theme.of(context).primaryColor,
+                  onTap: () {
+                    navigateToDetail(model, S.of(context).button_update_item);
+                  },
+                  caption: 'Edit',
+                  icon: Icons.edit,
+                ),
+              ],
+              secondaryActions: [
+                IconSlideAction(
+                  color: Colors.red,
+                  caption: 'Delete',
+                  onTap: () {
+                    deleteItem(model);
+                  },
+                  icon: Icons.delete,
+                ),
+              ],
+              child: model.status == S.of(context).model_status_pending
+                  ? Card(
+                      elevation: 5,
+                      color: Theme.of(context).cardColor,
+                      child: ListTile(
+                        //leading: Icon(Icons.edit),
+                        title: Text(
+                          model.title,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: Text(model.description),
+                        trailing: Wrap(
+                          spacing: 20.0,
+                          children: [
+                            model.status == S.of(context).model_status_pending
+                                ? Icon(
+                                    Icons.pending_actions,
+                                    color: Theme.of(context)
+                                        .iconTheme
+                                        .color, //blue
+                                  )
+                                : Icon(
+                                    Icons.done_all,
+                                    color: Theme.of(context)
+                                        .accentIconTheme
+                                        .color, //green
+                                  ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                )
-              : SizedBox.shrink();
+                    )
+                  : SizedBox.shrink(),
+            ),
+          );
         });
   }
 
@@ -158,36 +208,64 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemCount: count,
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
-          return model.status == S.of(context).model_status_pending
-              ? SizedBox.shrink()
-              : Card(
-                  elevation: 5,
-                  color: Colors.white,
-                  child: GestureDetector(
-                    onTap: () {
-                      navigateToDetail(model, S.of(context).button_update_item);
-                    },
-                    child: ListTile(
-                      leading: Icon(Icons.edit),
-                      title: Text(model.title),
-                      subtitle: Text(model.description),
-                      trailing: Wrap(
-                        spacing: 20.0,
-                        children: [
-                          model.status == S.of(context).model_status_pending
-                              ? Icon(Icons.pending_actions)
-                              : Icon(Icons.done_all, color: Colors.green),
-                          GestureDetector(
-                            child: Icon(Icons.delete, color: Colors.red),
-                            onTap: () {
-                              deleteItem(model);
-                            },
-                          ),
-                        ],
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              actions: [
+                IconSlideAction(
+                  color: Theme.of(context).primaryColor,
+                  onTap: () {
+                    navigateToDetail(model, S.of(context).button_update_item);
+                  },
+                  caption: 'Edit',
+                  icon: Icons.edit,
+                ),
+              ],
+              secondaryActions: [
+                IconSlideAction(
+                  color: Colors.red,
+                  caption: 'Delete',
+                  onTap: () {
+                    deleteItem(model);
+                  },
+                  icon: Icons.delete,
+                ),
+              ],
+              child: model.status == S.of(context).model_status_pending
+                  ? SizedBox.shrink()
+                  : Card(
+                      elevation: 5,
+                      color: Theme.of(context).cardColor,
+                      child: ListTile(
+                        //leading: Icon(Icons.edit),
+                        title: Text(
+                          model.title,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: Text(model.description),
+                        trailing: Wrap(
+                          spacing: 20.0,
+                          children: [
+                            model.status == S.of(context).model_status_pending
+                                ? Icon(
+                                    Icons.pending_actions,
+                                    color: Theme.of(context)
+                                        .iconTheme
+                                        .color, //blue
+                                  )
+                                : Icon(
+                                    Icons.done_all,
+                                    color: Theme.of(context)
+                                        .accentIconTheme
+                                        .color, //green
+                                  ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+            ),
+          );
         });
   }
 

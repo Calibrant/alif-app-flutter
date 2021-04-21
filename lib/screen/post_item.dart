@@ -43,6 +43,7 @@ class _PostItemState extends State<PostItem> {
     _titleEditingController.text = model.title;
     _dateController.text = model.description;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(appBarTitle),
@@ -55,7 +56,12 @@ class _PostItemState extends State<PostItem> {
             DropdownButton(
                 value: selectedStatus,
                 items: _statusesList.map((item) {
-                  return DropdownMenuItem(child: Text(item), value: item);
+                  return DropdownMenuItem(
+                      child: Text(
+                        item,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      value: item);
                 }).toList(),
                 onChanged: (item) {
                   setState(() {
@@ -65,7 +71,8 @@ class _PostItemState extends State<PostItem> {
             SizedBox(
               height: 20,
             ),
-            TextField(
+            TextFormField(
+              style: Theme.of(context).textTheme.bodyText2,
               controller: _titleEditingController,
               decoration: InputDecoration(
                   hintText: S.of(context).text_field_text,
@@ -84,6 +91,10 @@ class _PostItemState extends State<PostItem> {
                     //  DateFormat.yMMMd().format(DateTime.now())),
                     _dateTime.toString()),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
                   child: Text(S.of(context).button_pick_date),
                   onPressed: () {
                     showDatePicker(
@@ -111,8 +122,8 @@ class _PostItemState extends State<PostItem> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).primaryColor)),
                 onPressed: () {
                   validate();
                 },
