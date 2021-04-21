@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
+import 'package:flutter_app_alif/utilities/constants.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
 import 'post_item.dart';
@@ -42,7 +43,12 @@ class _ToDoScreenState extends State<ToDoScreen> {
       key: _globalKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Center(child: Text(S.of(context).app_bar_title,style: Theme.of(context).primaryTextTheme.headline6,)),
+        iconTheme: Theme.of(context).accentIconTheme,
+        title: Center(
+            child: Text(
+          S.of(context).app_bar_title,
+          style: Theme.of(context).primaryTextTheme.headline6,
+        )),
         actions: [
           IconButton(
             tooltip: S.of(context).tool_tip,
@@ -66,6 +72,46 @@ class _ToDoScreenState extends State<ToDoScreen> {
         selectedIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Todo list',
+                    style: Theme.of(context).primaryTextTheme.headline6,
+                  ),
+                  Text('alisher1705@gmail.com',
+                      style: Theme.of(context).primaryTextTheme.subtitle1),
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                // image: DecorationImage(image: AssetImage("images/todoicons.png"),),
+              ),
+            ),
+            /*    ListTile(
+              title: Text(
+                'Список задач',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              subtitle: Text('alisher1705@gmail.com'),
+            ),
+            ListTile(
+              leading: Icon(Icons.map),
+              title: Text('Todos'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ToDoScreen()));
+              },
+            ), */
+          ],
+        ),
+      ),
     );
   }
 
@@ -81,7 +127,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
           return ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: kBorderRadius,
             child: Slidable(
               actionPane: SlidableDrawerActionPane(),
               actions: [
@@ -90,14 +136,14 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   onTap: () {
                     navigateToDetail(model, S.of(context).button_update_item);
                   },
-                  caption: 'Edit',
+                  caption: S.of(context).caption_edit,
                   icon: Icons.edit,
                 ),
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: S.of(context).caption_delete,
                   onTap: () {
                     deleteItem(model);
                   },
@@ -108,7 +154,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
                 elevation: 5,
                 color: Theme.of(context).cardColor,
                 child: ListTile(
-                  //leading: Icon(Icons.edit),
                   title: Text(
                     model.title,
                     style: Theme.of(context).textTheme.headline6,
@@ -124,9 +169,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                             )
                           : Icon(
                               Icons.done_all,
-                              color: Theme.of(context)
-                                  .accentIconTheme
-                                  .color, //green
+                              color: Theme.of(context).accentColor,
+                              //green
                             ),
                     ],
                   ),
@@ -143,7 +187,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
           return ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: kBorderRadius,
             child: Slidable(
               actionPane: SlidableDrawerActionPane(),
               actions: [
@@ -152,14 +196,14 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   onTap: () {
                     navigateToDetail(model, S.of(context).button_update_item);
                   },
-                  caption: 'Edit',
+                  caption: S.of(context).caption_edit,
                   icon: Icons.edit,
                 ),
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: S.of(context).caption_delete,
                   onTap: () {
                     deleteItem(model);
                   },
@@ -171,7 +215,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       elevation: 5,
                       color: Theme.of(context).cardColor,
                       child: ListTile(
-                        //leading: Icon(Icons.edit),
                         title: Text(
                           model.title,
                           style: Theme.of(context).textTheme.headline6,
@@ -189,9 +232,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                   )
                                 : Icon(
                                     Icons.done_all,
-                                    color: Theme.of(context)
-                                        .accentIconTheme
-                                        .color, //green
+                                    color:
+                                        Theme.of(context).accentColor, //green
                                   ),
                           ],
                         ),
@@ -209,7 +251,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
         itemBuilder: (context, index) {
           Model model = this._todoList[index];
           return ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: kBorderRadius,
             child: Slidable(
               actionPane: SlidableDrawerActionPane(),
               actions: [
@@ -218,14 +260,14 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   onTap: () {
                     navigateToDetail(model, S.of(context).button_update_item);
                   },
-                  caption: 'Edit',
+                  caption: S.of(context).caption_edit,
                   icon: Icons.edit,
                 ),
               ],
               secondaryActions: [
                 IconSlideAction(
                   color: Colors.red,
-                  caption: 'Delete',
+                  caption: S.of(context).caption_delete,
                   onTap: () {
                     deleteItem(model);
                   },
@@ -238,7 +280,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       elevation: 5,
                       color: Theme.of(context).cardColor,
                       child: ListTile(
-                        //leading: Icon(Icons.edit),
                         title: Text(
                           model.title,
                           style: Theme.of(context).textTheme.headline6,
@@ -256,9 +297,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                   )
                                 : Icon(
                                     Icons.done_all,
-                                    color: Theme.of(context)
-                                        .accentIconTheme
-                                        .color, //green
+                                    color:
+                                        Theme.of(context).accentColor, //green
                                   ),
                           ],
                         ),

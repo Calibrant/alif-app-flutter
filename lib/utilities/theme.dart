@@ -10,10 +10,12 @@ final kLightTheme = ThemeData.light().copyWith(
   primaryTextTheme: TextTheme(
     headline6: TextStyle(
         color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),
+    subtitle1: TextStyle(
+        color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
   ),
   textTheme: TextTheme(
     headline6: TextStyle(
-        color: Colors.blue[900], fontSize: 18.0, fontWeight: FontWeight.bold),
+        color: Colors.blue[900], fontSize: 16.0, fontWeight: FontWeight.bold),
     bodyText1: TextStyle(
         color: Colors.red, fontSize: 16.0, fontWeight: FontWeight.bold),
     bodyText2: TextStyle(color: Colors.black, fontSize: 16.0),
@@ -23,5 +25,6 @@ final kLightTheme = ThemeData.light().copyWith(
   cardColor: Colors.blue[50],
   iconTheme: IconThemeData(color: Colors.blue[600]),
   primaryIconTheme: IconThemeData(color: Colors.red),
-  accentIconTheme: IconThemeData(color: Colors.green[900]),
+  accentIconTheme: IconThemeData(color: Colors.white),
+  accentColor: Colors.green,
 );

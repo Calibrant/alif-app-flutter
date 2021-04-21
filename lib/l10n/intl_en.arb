@@ -12,6 +12,8 @@
     "date_format":"d-MM-yyyy",
     "date_nothing_selected":"Ничего не выбрано",
     "bottom_navbar_title0":"Todos",
-    "space":""
+    "space":"",
+    "caption_edit": "Edit",
+    "caption_delete": "Delete"
 
 }
