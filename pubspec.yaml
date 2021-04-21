@@ -29,6 +29,10 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - images/
  
 flutter_intl:
   enabled: true
+
+  

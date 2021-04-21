@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "button_add_new_item" : MessageLookupByLibrary.simpleMessage("Add New Item"),
     "button_pick_date" : MessageLookupByLibrary.simpleMessage("Pick a date"),
     "button_update_item" : MessageLookupByLibrary.simpleMessage("Update Item"),
+    "caption_delete" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "caption_edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "date_format" : MessageLookupByLibrary.simpleMessage("d-MM-yyyy"),
     "date_nothing_selected" : MessageLookupByLibrary.simpleMessage("Ничего не выбрано"),
     "model_status_completed" : MessageLookupByLibrary.simpleMessage("Completed"),

@@ -174,6 +174,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Edit`
+  String get caption_edit {
+    return Intl.message(
+      'Edit',
+      name: 'caption_edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get caption_delete {
+    return Intl.message(
+      'Delete',
+      name: 'caption_delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
