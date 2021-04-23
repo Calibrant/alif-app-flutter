@@ -3,11 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
 import 'package:flutter_app_alif/provider%20pattern/todos.dart';
+import 'package:flutter_app_alif/utilities/constants.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
-import 'package:flutter_app_alif/widgets/completed_page.dart';
-import 'package:flutter_app_alif/widgets/pending_page.dart';
-import 'package:flutter_app_alif/widgets/todos_page.dart';
+import 'package:flutter_app_alif/screen/completed_page.dart';
+import 'package:flutter_app_alif/screen/pending_page.dart';
+import 'package:flutter_app_alif/screen/todos_page.dart';
 import 'package:provider/provider.dart';
 import 'post_item.dart';
 
@@ -125,9 +126,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       style: Theme.of(context).primaryTextTheme.subtitle1),
                 ],
               ),
-              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            ),
-          ],
+            ),],
         ),
       ),
     );
@@ -139,7 +138,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
     });
   }
 
-  updateListView() async {
+ 
+ updateListView() async {
     _todoList = await dataBaseHelper.getModelsFromMapList();
     setState(() {
       _todoList = _todoList;
