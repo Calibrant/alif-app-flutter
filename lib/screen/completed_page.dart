@@ -8,10 +8,8 @@ import 'package:provider/provider.dart';
 
 class CompletedPage extends StatelessWidget {
   final int count;
-  //final Model model;
   final Function navigateDetail;
   final Function deleteItem;
-  // final Model model;
 
   const CompletedPage(
       {Key key,

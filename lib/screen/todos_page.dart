@@ -8,10 +8,9 @@ import 'package:provider/provider.dart';
 
 class TodosPage extends StatelessWidget {
   final int count;
-  //final Model model;
   final Function navigateDetail;
   final Function deleteItem;
-  // final Model model;
+  final List<Model> todoList;
 
   const TodosPage(
       {Key key,
@@ -20,7 +19,6 @@ class TodosPage extends StatelessWidget {
       this.navigateDetail,
       this.deleteItem})
       : super(key: key);
-  final List<Model> todoList;
 
   @override
   Widget build(BuildContext context) {

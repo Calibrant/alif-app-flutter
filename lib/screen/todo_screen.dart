@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
 import 'package:flutter_app_alif/provider%20pattern/todos.dart';
-import 'package:flutter_app_alif/utilities/constants.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
 import 'package:flutter_app_alif/screen/completed_page.dart';
@@ -20,7 +19,7 @@ class ToDoScreen extends StatefulWidget {
 
 class _ToDoScreenState extends State<ToDoScreen> {
   DataBaseHelper dataBaseHelper = DataBaseHelper();
-  List<Model> _todoList = null;
+  List<Model> _todoList;
   int count = 0;
   int _selectedIndex = 0;
   GlobalKey<ScaffoldState> _globalKey = new GlobalKey();
@@ -120,8 +119,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
     });
   }
 
- 
- updateListView() async {
+  updateListView() async {
     _todoList = await dataBaseHelper.getModelsFromMapList();
     setState(() {
       _todoList = _todoList;
@@ -132,7 +130,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
   deleteItem(Model toDoModel) async {
     int result = await dataBaseHelper.delete(toDoModel);
     if (result != 0) {
-      _globalKey.currentState
+      ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(S.of(context).snack_bar_text)));
       updateListView();
     }
