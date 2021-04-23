@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
-import 'package:flutter_app_alif/utilities/constants.dart';
+import 'package:flutter_app_alif/provider%20pattern/todos.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
+import 'package:flutter_app_alif/widgets/completed_page.dart';
+import 'package:flutter_app_alif/widgets/pending_page.dart';
+import 'package:flutter_app_alif/widgets/todos_page.dart';
+import 'package:provider/provider.dart';
 import 'post_item.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ToDoScreen extends StatefulWidget {
   @override
@@ -23,15 +26,48 @@ class _ToDoScreenState extends State<ToDoScreen> {
   @override
   void initState() {
     super.initState();
-    int count = 0;
+    count = 0;
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = [
-      populateListView(),
-      populateListView2(),
-      populateListView3(),
+      TodosPage(
+        count: count,
+        todoList: _todoList,
+        navigateDetail: () {
+          navigateToDetail(
+              Provider.of<TodosProvider>(context, listen: false).model,
+              S.of(context).button_update_item);
+        },
+        deleteItem: () {
+          deleteItem(Provider.of<TodosProvider>(context, listen: false).model);
+        },
+      ),
+      PendingPage(
+        count: count,
+        todoList: _todoList,
+        navigateDetail: () {
+          navigateToDetail(
+              Provider.of<TodosProvider>(context, listen: false).model,
+              S.of(context).button_update_item);
+        },
+        deleteItem: () {
+          deleteItem(Provider.of<TodosProvider>(context, listen: false).model);
+        },
+      ),
+      CompletedPage(
+        count: count,
+        todoList: _todoList,
+        navigateDetail: () {
+          navigateToDetail(
+              Provider.of<TodosProvider>(context, listen: false).model,
+              S.of(context).button_update_item);
+        },
+        deleteItem: () {
+          deleteItem(Provider.of<TodosProvider>(context, listen: false).model);
+        },
+      ),
     ];
 
     if (_todoList == null) {
@@ -89,26 +125,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       style: Theme.of(context).primaryTextTheme.subtitle1),
                 ],
               ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                // image: DecorationImage(image: AssetImage("images/todoicons.png"),),
-              ),
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             ),
-            /*    ListTile(
-              title: Text(
-                'Список задач',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              subtitle: Text('alisher1705@gmail.com'),
-            ),
-            ListTile(
-              leading: Icon(Icons.map),
-              title: Text('Todos'),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ToDoScreen()));
-              },
-            ), */
           ],
         ),
       ),
@@ -119,194 +137,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  ListView populateListView() {
-    return ListView.builder(
-        itemCount: count,
-        itemBuilder: (context, index) {
-          Model model = this._todoList[index];
-          return ClipRRect(
-            borderRadius: kBorderRadius,
-            child: Slidable(
-              actionPane: SlidableDrawerActionPane(),
-              actions: [
-                IconSlideAction(
-                  color: Theme.of(context).primaryColor,
-                  onTap: () {
-                    navigateToDetail(model, S.of(context).button_update_item);
-                  },
-                  caption: S.of(context).caption_edit,
-                  icon: Icons.edit,
-                ),
-              ],
-              secondaryActions: [
-                IconSlideAction(
-                  color: Colors.red,
-                  caption: S.of(context).caption_delete,
-                  onTap: () {
-                    deleteItem(model);
-                  },
-                  icon: Icons.delete,
-                ),
-              ],
-              child: Card(
-                elevation: 5,
-                color: Theme.of(context).cardColor,
-                child: ListTile(
-                  title: Text(
-                    model.title,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  subtitle: Text(model.description),
-                  trailing: Wrap(
-                    spacing: 20.0,
-                    children: [
-                      model.status == S.of(context).model_status_pending
-                          ? Icon(
-                              Icons.pending_actions,
-                              color: Theme.of(context).iconTheme.color, //blue
-                            )
-                          : Icon(
-                              Icons.done_all,
-                              color: Theme.of(context).accentColor,
-                              //green
-                            ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-  ListView populateListView2() {
-    return ListView.builder(
-        itemCount: count,
-        itemBuilder: (context, index) {
-          Model model = this._todoList[index];
-          return ClipRRect(
-            borderRadius: kBorderRadius,
-            child: Slidable(
-              actionPane: SlidableDrawerActionPane(),
-              actions: [
-                IconSlideAction(
-                  color: Theme.of(context).primaryColor,
-                  onTap: () {
-                    navigateToDetail(model, S.of(context).button_update_item);
-                  },
-                  caption: S.of(context).caption_edit,
-                  icon: Icons.edit,
-                ),
-              ],
-              secondaryActions: [
-                IconSlideAction(
-                  color: Colors.red,
-                  caption: S.of(context).caption_delete,
-                  onTap: () {
-                    deleteItem(model);
-                  },
-                  icon: Icons.delete,
-                ),
-              ],
-              child: model.status == S.of(context).model_status_pending
-                  ? Card(
-                      elevation: 5,
-                      color: Theme.of(context).cardColor,
-                      child: ListTile(
-                        title: Text(
-                          model.title,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Text(model.description),
-                        trailing: Wrap(
-                          spacing: 20.0,
-                          children: [
-                            model.status == S.of(context).model_status_pending
-                                ? Icon(
-                                    Icons.pending_actions,
-                                    color: Theme.of(context)
-                                        .iconTheme
-                                        .color, //blue
-                                  )
-                                : Icon(
-                                    Icons.done_all,
-                                    color:
-                                        Theme.of(context).accentColor, //green
-                                  ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : SizedBox.shrink(),
-            ),
-          );
-        });
-  }
-
-  ListView populateListView3() {
-    return ListView.builder(
-        itemCount: count,
-        itemBuilder: (context, index) {
-          Model model = this._todoList[index];
-          return ClipRRect(
-            borderRadius: kBorderRadius,
-            child: Slidable(
-              actionPane: SlidableDrawerActionPane(),
-              actions: [
-                IconSlideAction(
-                  color: Theme.of(context).primaryColor,
-                  onTap: () {
-                    navigateToDetail(model, S.of(context).button_update_item);
-                  },
-                  caption: S.of(context).caption_edit,
-                  icon: Icons.edit,
-                ),
-              ],
-              secondaryActions: [
-                IconSlideAction(
-                  color: Colors.red,
-                  caption: S.of(context).caption_delete,
-                  onTap: () {
-                    deleteItem(model);
-                  },
-                  icon: Icons.delete,
-                ),
-              ],
-              child: model.status == S.of(context).model_status_pending
-                  ? SizedBox.shrink()
-                  : Card(
-                      elevation: 5,
-                      color: Theme.of(context).cardColor,
-                      child: ListTile(
-                        title: Text(
-                          model.title,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Text(model.description),
-                        trailing: Wrap(
-                          spacing: 20.0,
-                          children: [
-                            model.status == S.of(context).model_status_pending
-                                ? Icon(
-                                    Icons.pending_actions,
-                                    color: Theme.of(context)
-                                        .iconTheme
-                                        .color, //blue
-                                  )
-                                : Icon(
-                                    Icons.done_all,
-                                    color:
-                                        Theme.of(context).accentColor, //green
-                                  ),
-                          ],
-                        ),
-                      ),
-                    ),
-            ),
-          );
-        });
   }
 
   updateListView() async {

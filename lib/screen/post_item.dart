@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_alif/generated/l10n.dart';
 import 'package:flutter_app_alif/models/model.dart';
+import 'package:flutter_app_alif/provider%20pattern/todos.dart';
 import 'package:flutter_app_alif/utilities/db_helper.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
   Model model;
@@ -87,8 +89,7 @@ class _PostItemState extends State<PostItem> {
               children: <Widget>[
                 Text(_dateTime == null
                     ? S.of(context).date_nothing_selected
-                    : //DateFormat.yMMMMEEEEd().format(DateTime.now())),
-                    //  DateFormat.yMMMd().format(DateTime.now())),
+                    : 
                     _dateTime.toString()),
                 ElevatedButton(
                   style: ButtonStyle(
