@@ -48,30 +48,34 @@ class TodosPage extends StatelessWidget {
                 ),
               ],
               child: Card(
-                elevation: 5,
-                color: Theme.of(context).cardColor,
-                child: ListTile(
-                  title: Text(
-                    model.title,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  subtitle: Text(model.description),
-                  trailing: Wrap(
-                    spacing: 20.0,
-                    children: [
-                      model.status == S.of(context).model_status_pending
-                          ? Icon(
-                              Icons.pending_actions,
-                              color: Theme.of(context).iconTheme.color, //blue
-                            )
-                          : Icon(
-                              Icons.done_all,
-                              color: Theme.of(context).accentColor, //green
-                            ),
-                    ],
-                  ),
-                ),
-              ),
+                      elevation: 5,
+                      color: Theme.of(context).cardColor,
+                      child: ListTile(
+                        title: Text(
+                          model.title,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: Text(model.description),
+                        trailing: Wrap(
+                          spacing: 20.0,
+                          children: [
+                            model.status == S.of(context).model_status_pending
+                                ? Icon(
+                                    Icons.pending_actions,
+                                    color: Theme.of(context)
+                                        .iconTheme
+                                        .color, //blue
+                                  )
+                                : Icon(
+                                    Icons.done_all,
+                                    color:
+                                        Theme.of(context).accentColor, //green
+                                  ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ,
             ),
           );
         });
