@@ -9,6 +9,7 @@ import 'package:flutter_app_alif/widgets/bottom_navbar.dart';
 import 'package:flutter_app_alif/screen/completed_page.dart';
 import 'package:flutter_app_alif/screen/pending_page.dart';
 import 'package:flutter_app_alif/screen/todos_page.dart';
+import 'package:flutter_app_alif/widgets/drawer_bar.dart';
 import 'package:provider/provider.dart';
 import 'post_item.dart';
 
@@ -109,26 +110,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
         selectedIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Todo list',
-                    style: Theme.of(context).primaryTextTheme.headline6,
-                  ),
-                  Text('alisher1705@gmail.com',
-                      style: Theme.of(context).primaryTextTheme.subtitle1),
-                ],
-              ),
-            ),],
-        ),
-      ),
+      drawer: DrawerBar(),
     );
   }
 
